@@ -1,8 +1,7 @@
 # 3D-RPG-Demo
 This is a beginner 3D personal project
 
-GOALS
-
+#GOALS
 * Basic movement for 3D game
 * Create evironment for character to move around in
 * Add in RPG elements
