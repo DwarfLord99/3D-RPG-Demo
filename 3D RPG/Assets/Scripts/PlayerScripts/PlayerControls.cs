@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
-    private Rigidbody rb;
+    private CharacterController characterController;
     private float movementX;
     private float movementY;
 
@@ -21,7 +21,7 @@ public class PlayerControls : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
         playerControls = new PlayerInputActions();
     }
 
@@ -40,7 +40,7 @@ public class PlayerControls : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
-        rb.AddForce(movement * moveSpeed);
+        characterController.Move(movement * Time.deltaTime * moveSpeed);
     }
 
     void OnMove(InputValue movementValue)
@@ -55,7 +55,7 @@ public class PlayerControls : MonoBehaviour
     {
         if(context.performed)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+            
         }
     }
 }
