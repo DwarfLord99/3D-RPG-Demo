@@ -13,10 +13,13 @@ public class PlayerControls : MonoBehaviour
     private InputAction jump;
 
     [Header("Movement")]
+    private Vector3 playerVelocity;
     [SerializeField] float moveSpeed = 0.0f;
 
     [Header("Jump")]
+    private bool isGrounded;
     [SerializeField] float jumpHeight = 0.0f;
+    private float gravityValue = -9.81f;
 
 
     void Awake()
@@ -37,6 +40,18 @@ public class PlayerControls : MonoBehaviour
         jump.Disable();
     }
 
+    private void Update()
+    {
+        isGrounded = characterController.isGrounded;
+        if(isGrounded && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0;
+        }
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        characterController.Move(playerVelocity * Time.deltaTime);
+    }
+
     void FixedUpdate()
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
@@ -55,7 +70,7 @@ public class PlayerControls : MonoBehaviour
     {
         if(context.performed)
         {
-            
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         }
     }
 }
